@@ -19,13 +19,14 @@ class SearchBar extends StatefulWidget {
 //  文本发生变化
   ValueChanged<String>? onChanged;
 
-  SearchBar({super.key,
-    this.hideLeft = true,
-    this.placeholder = '',
-    this.defaultValue = '',
-    this.speakClick,
-    this.onSearch,
-    this.onChanged});
+  SearchBar(
+      {super.key,
+      this.hideLeft = true,
+      this.placeholder = '',
+      this.defaultValue = '',
+      this.speakClick,
+      this.onSearch,
+      this.onChanged});
 
   @override
   State<StatefulWidget> createState() {
@@ -34,11 +35,9 @@ class SearchBar extends StatefulWidget {
 }
 
 class _SearchBar extends State<SearchBar> {
-
   bool showClear = false;
 
   final TextEditingController _controller = TextEditingController();
-
 
   @override
   void initState() {
@@ -67,6 +66,9 @@ class _SearchBar extends State<SearchBar> {
     List<Widget> list = [];
     if (widget.hideLeft != true) {
       list.add(GestureDetector(
+        onTap: () {
+          Navigator.pop(context);
+        },
         child: const Icon(
           Icons.arrow_back_ios,
           size: 20,
@@ -98,7 +100,7 @@ class _SearchBar extends State<SearchBar> {
           Expanded(
               flex: 1,
               child: TextField(
-                autofocus: true,
+                autofocus: false,
                 style: const TextStyle(
                     fontSize: 18,
                     color: Colors.black,
@@ -109,13 +111,13 @@ class _SearchBar extends State<SearchBar> {
                     // 去掉输入框底部线，修复设置了contentPadding后输入框内容不能垂直居中
                     focusedBorder: const OutlineInputBorder(
                         borderSide:
-                        BorderSide(width: 0, color: Colors.transparent)),
+                            BorderSide(width: 0, color: Colors.transparent)),
                     disabledBorder: const OutlineInputBorder(
                         borderSide:
-                        BorderSide(width: 0, color: Colors.transparent)),
+                            BorderSide(width: 0, color: Colors.transparent)),
                     enabledBorder: const OutlineInputBorder(
                         borderSide:
-                        BorderSide(width: 0, color: Colors.transparent)),
+                            BorderSide(width: 0, color: Colors.transparent)),
                     border: InputBorder.none,
                     hintText: widget.placeholder,
                     hintStyle: const TextStyle(fontSize: 15)),
@@ -124,27 +126,27 @@ class _SearchBar extends State<SearchBar> {
               )),
           showClear
               ? GestureDetector(
-            onTap: () {
-              setState(() {
-                // 清空文本内容
-                _controller.clear();
-              });
-              _onChanged('');
-            },
-            child: const Icon(
-              Icons.clear,
-              size: 22,
-              color: Colors.grey,
-            ),
-          )
+                  onTap: () {
+                    setState(() {
+                      // 清空文本内容
+                      _controller.clear();
+                    });
+                    _onChanged('');
+                  },
+                  child: const Icon(
+                    Icons.clear,
+                    size: 22,
+                    color: Colors.grey,
+                  ),
+                )
               : GestureDetector(
-            onTap: () {
-              if (widget.speakClick != null) {
-                widget.speakClick!();
-              }
-            },
-            child: const Icon(Icons.mic, size: 22, color: Colors.blue),
-          )
+                  onTap: () {
+                    if (widget.speakClick != null) {
+                      widget.speakClick!();
+                    }
+                  },
+                  child: const Icon(Icons.mic, size: 22, color: Colors.blue),
+                )
         ]),
       ),
     );

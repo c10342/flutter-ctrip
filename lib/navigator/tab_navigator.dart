@@ -27,6 +27,8 @@ class _TabNavigator extends State<TabNavigator> {
     // Scaffold是一个可以快速搭建一个页面骨架的组件
     return Scaffold(
       body: PageView(
+//        禁止左右滑动
+        physics: NeverScrollableScrollPhysics(),
         controller: _controller,
         children: const [
           HomePage(),
@@ -36,11 +38,11 @@ class _TabNavigator extends State<TabNavigator> {
         ],
       ),
       // 底部导航
-      bottomNavigationBar:_bottomNavigationBar(),
+      bottomNavigationBar: _bottomNavigationBar(),
     );
   }
 
-  _onBottomNavigationBarClick(index){
+  _onBottomNavigationBarClick(index) {
     // 跳转到指定的PageView的页面
     _controller.jumpToPage(index);
     setState(() {
@@ -49,8 +51,8 @@ class _TabNavigator extends State<TabNavigator> {
     });
   }
 
-  _bottomNavigationBar(){
-    return  BottomNavigationBar(
+  _bottomNavigationBar() {
+    return BottomNavigationBar(
       // 当前选中的是哪一个
       currentIndex: _currentIndex,
       // 点击事件
